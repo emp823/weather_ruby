@@ -1,0 +1,26 @@
+require:
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.2
+  DisplayStyleGuide: true
+  EnabledByDefault: true
+
+Style/Copyright:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  # If `true`, strings which span multiple lines using `\` for continuation must
+  # use the same type of quotes on each line.
+  ConsistentQuotesInMultiline: false
+
+Lint/ConstantResolution:
+  Enabled: false

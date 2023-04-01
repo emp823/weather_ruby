@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Snowfall Forecast</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  </head>
+  <body>
+    <h1>Snowfall Forecast for <%= @location %></h1>
+
+    <form action="/" method="get">
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" class="form-control" id="location" name="location" placeholder="Enter a city name"  autocomplete="off">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <% if @forecast['list'] %>
+      <% @forecast['list'].each do |forecast| %>
+        <% if forecast['weather'][0]['main'] == 'Snow' %>
+          <p><%= Time.strptime(forecast["dt_txt"], "%Y-%m-%d %H:%M:%S").strftime("%m/%d/%Y %I:%M %p") %> - <%= forecast['snow']['3h'] %> in</p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </body>
+  <script>
+    $(function() {
+      var delay = 500; // milliseconds
+      var timerId;
+      $("#location").autocomplete({
+        source: function(request, response) {
+          clearTimeout(timerId);
+          timerId = setTimeout(function() {
+            $.ajax({
+              url: "/autocomplete",
+              dataType: "json",
+              data: {
+                query: request.term
+              },
+              success: function(data) {
+                response(data.suggestions);
+              }
+            });
+          }, delay);
+        },
+        minLength: 3
+      });
+    });
+  </script>
+</html>
