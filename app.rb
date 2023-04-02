@@ -8,7 +8,7 @@ require "sinatra/reloader" if development?
 class WeatherRuby < Sinatra::Base
   get "/autocomplete" do
     query = params[:query]
-    api_key = "***REMOVED***"
+    api_key = "test"
     url = "https://api.openweathermap.org/data/2.5/find?q=#{query}&type=like&mode=json&appid=#{api_key}"
     response = HTTParty.get(url)
     if response.code == 200
@@ -21,7 +21,7 @@ class WeatherRuby < Sinatra::Base
   end
 
   get "/" do
-    api_key = "***REMOVED***"
+    api_key = "test"
     @location = params[:location] || "Bend"
     # Use the location to get the forecasted amount of snowfall
     # You can use an API like OpenWeatherMap to get this data
